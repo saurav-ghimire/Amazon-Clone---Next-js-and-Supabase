@@ -1,10 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BiCart } from "react-icons/bi";
 import { IoSearch } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-
+const secondMenu = [ 'All', 'Todays Deals', 'Customer Service', 'Registry', 'Gift Cards', 'Sell']
 function Header() {
+
   return ( 
+    <>
     <div className="bg-[#131921] text-white py-2">
       <div className="flex items-center justify-between w-[90%] m-auto">
         <div className="w-[15%]">
@@ -37,6 +41,19 @@ function Header() {
         </div>
       </div>
     </div>
+    <div className="bg-[#232f3e] w-full text-white px-5 py-1 flex justify-between items-center">
+      <div className="flex justify-start">
+        {
+              secondMenu.map((data, index) => (
+                <Link className="flex items-center gap-2 border border-transparent px-2 py-1 rounded-sm transition ease-in-out hover:border-white" key={index} href={'/'}>{data=='All' ? <RxHamburgerMenu /> : ''}{data}</Link>
+              ))
+        }
+      </div>
+      <div>
+        <Link className="text-[#FEBD69] font-bold"  href={'/'}>Signout</Link>
+      </div>
+    </div>
+    </>
   );
 }
 
