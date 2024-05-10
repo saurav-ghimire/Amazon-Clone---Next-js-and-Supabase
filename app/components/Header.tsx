@@ -1,5 +1,8 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+import { useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -7,16 +10,28 @@ import { RxHamburgerMenu } from "react-icons/rx";
 const secondMenu = [ 'All', 'Todays Deals', 'Customer Service', 'Registry', 'Gift Cards', 'Sell']
 function Header() {
 
+  const[query, setQuery] = useState<string>("");
+  const router = useRouter();
+
+  const handleOnChange= (e : any) => {
+    setQuery(e?.target.value);
+  }
+  
+  const submitHandler = () => {
+    router.push(`/search/${query}`);
+    
+  }
+
   return ( 
     <>
     <div className="bg-[#131921] text-white py-2">
       <div className="flex items-center justify-between w-[90%] m-auto">
         <div className="w-[15%]">
-          <Image alt="Logo" src={'/amazon-logo-2.webp'} width={150} height={150} />
+          <Link href={'/'}><Image alt="Logo" src={'/amazon-logo-2.webp'} width={150} height={150} /></Link>
         </div>
         <div className="w-[60%] flex items-center">
-          <input className="w-full p-2 rounded-l-md text-black outline-none" type="text" placeholder="Search Amazon" />
-          <div className="bg-[#FEBD69] p-2 rounded-r-md">
+          <input onChange={(e) => handleOnChange(e)} className="w-full p-2 rounded-l-md text-black outline-none" type="text" placeholder="Search Amazon" />
+          <div className="bg-[#FEBD69] cursor-pointer p-2 rounded-r-md" onClick={() => submitHandler()}>
             <IoSearch size={24} className="text-black" />
           </div>
         </div>
@@ -45,7 +60,7 @@ function Header() {
       <div className="flex justify-start">
         {
               secondMenu.map((data, index) => (
-                <Link className="flex items-center gap-2 border border-transparent px-2 py-1 rounded-sm transition ease-in-out hover:border-white" key={index} href={'/'}>{data=='All' ? <RxHamburgerMenu /> : ''}{data}</Link>
+                <Link className="flex items-center gap-2 border border-transparent px-2 py-1 rounded-sm transition ease-in-out hover:border-white" key={index} href={`/search/${data}`}>{data=='All' ? <RxHamburgerMenu /> : ''}{data}</Link>
               ))
         }
       </div>
