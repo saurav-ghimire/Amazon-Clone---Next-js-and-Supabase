@@ -31,7 +31,7 @@ function Header() {
         </div>
         <div className="w-[60%] flex items-center">
           <input onChange={(e) => handleOnChange(e)} className="w-full p-2 rounded-l-md text-black outline-none" type="text" placeholder="Search Amazon" />
-          <div className="bg-[#FEBD69] cursor-pointer p-2 rounded-r-md" onClick={() => submitHandler()}>
+          <div className="bg-[#FEBD69] cursor-pointer p-2 rounded-r-md transition-all ease-linear hover:bg-[#eeaf5c]" onClick={() => submitHandler()}>
             <IoSearch size={24} className="text-black" />
           </div>
         </div>

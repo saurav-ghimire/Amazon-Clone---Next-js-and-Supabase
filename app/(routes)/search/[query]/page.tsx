@@ -18,7 +18,7 @@ function Search() {
   
   return ( 
     <div>
-      <SearchResult />
+      <SearchResult data={filterProduct} />
     </div>
    );
 }
