@@ -1,4 +1,5 @@
 "use client"
+import { useAppSelector } from "@/lib/hooks/redux";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -6,6 +7,8 @@ import { useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
+import {RootState} from '@/store/index'
+import { getCart } from "@/store/cartSlice";
 
 const secondMenu = [ 'All', 'Todays Deals', 'Customer Service', 'Registry', 'Gift Cards', 'Sell']
 function Header() {
@@ -21,6 +24,8 @@ function Header() {
     router.push(`/search/${query}`);
     
   }
+
+  const cartItems = useAppSelector(getCart);
 
   return ( 
     <>
@@ -45,13 +50,19 @@ function Header() {
               <h2 className="font-bold text-sm">& Orders</h2>
             </div>
             <div className="cursor-pointer">
-              <p className="relative top-3 left-5">0</p>
-              <div className="flex">
-                <div>
-                  <BiCart size={"40px"} />
+              <p className="relative top-3 left-5">
+                {
+                  cartItems.length
+                }
+              </p>
+              <Link href={'/cart'}>
+                <div className="flex">
+                  <div>
+                    <BiCart size={"40px"} />
+                  </div>
+                  <h2 className="mt-4 font-bold	">Cart</h2>
                 </div>
-                <h2 className="mt-4 font-bold	">Cart</h2>
-              </div>
+              </Link>
             </div>
         </div>
       </div>
