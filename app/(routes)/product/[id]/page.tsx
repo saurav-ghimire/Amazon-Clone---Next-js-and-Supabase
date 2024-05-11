@@ -5,25 +5,29 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function ProductSinglePage() {
-  const [loading, setLoading] = useState(true)
-  const {id} = useParams();
-  const {getSingleProduct, singleData} = useSupabase();
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const { getSingleProduct, singleData } = useSupabase();
+
   useEffect(() => {
-    setLoading(true); // Set loading to true when component mounts or when id changes
+    setLoading(true);
     getSingleProduct(Number(id))
-      .then(() => setLoading(false)); // Set loading to false when data is fetched
+      .then(() => setLoading(false));
   }, [id]);
-  
+
   const isDataEmptyOrLoading = singleData.length === 0 || loading;
 
-  
   return (
     <div>
-      {
-        isDataEmptyOrLoading !== true ? <SingleProduct details={singleData[0]} /> : "Loading"
-      }
+      {isDataEmptyOrLoading ? (
+        <div>Loading ...</div>
+      ) : (
+        <div>
+          <SingleProduct details={singleData[0]} />
+        </div>
+      )}
     </div>
-   );
+  );
 }
 
 export default ProductSinglePage;
