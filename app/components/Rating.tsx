@@ -23,7 +23,7 @@ function Rating({averageRating}:{averageRating:any}) {
   return (
     <div className="flex items-center space-x-1">
       {stars}
-      <span className="text-gray-500">({averageRating.toFixed(1)})</span>
+      <span className="text-gray-500">({averageRating?.toFixed(1)})</span>
     </div>
   );
 }

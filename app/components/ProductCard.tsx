@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Rating from "./Rating";
+import Link from "next/link";
 
 function ProductCart({ product }: { product: any }) {
 
   return (
+
     <div className="cursor-pointer">
+      <Link href={`/product/${product?.id}`}>
       <div className="relative bg-gray-100 h-[250px] flex items-center justify-center rounded-md overflow-hidden ">
         <div className="absolute inset-0 flex items-center justify-center">
           <Image
@@ -25,6 +28,7 @@ function ProductCart({ product }: { product: any }) {
         </div>
         <p className="font-bold text-2xl mt-2">${product.price}</p>
       </div>
+      </Link>
     </div>
   );
 }

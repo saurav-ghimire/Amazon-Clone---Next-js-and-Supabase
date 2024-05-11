@@ -5,6 +5,7 @@ export const useSupabase =  () => {
   
   const [product, setProducts] = useState<any>([]);
   const [filterProduct, setFilterProduct] = useState<any>([]);
+  const [singleData, setSingleData] = useState<any>([]);
 
   const getProducts = async () => {
     let { data, error } = await supabase
@@ -29,5 +30,16 @@ export const useSupabase =  () => {
             }
           }
 
-    return {getProducts, product, filterProduct, getFilteredProducts}
+          const getSingleProduct = async (id:Number) => {
+            let { data, error } = await supabase.from('Products').select('*').eq('id',id)
+    
+              if(data){
+                setSingleData(data)
+              }
+                if(error){
+                  console.log(error)
+                }
+              }
+
+    return {getProducts, product, filterProduct, getFilteredProducts, getSingleProduct, singleData}
 }
