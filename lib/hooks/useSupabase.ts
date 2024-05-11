@@ -19,11 +19,10 @@ export const useSupabase =  () => {
       }
 
       const getFilteredProducts = async (query:string) => {
-        let { data, error } = await supabase.from('Products').select('*').ilike('title', `%${query}%`)
+        let { data, error } = await supabase.from('Products').select('*').or(`title.ilike.%${query}%, description.ilike.%${query}%, category.ilike.%${query}%` )
 
           if(data){
             setFilterProduct(data)
-            console.log('data', data)
           }
             if(error){
               console.log(error)

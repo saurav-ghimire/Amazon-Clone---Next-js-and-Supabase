@@ -1,6 +1,7 @@
 "use client"
 
 
+import SearchResult from "@/app/components/SearchResult";
 import { useSupabase } from "@/lib/hooks/useSupabase";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -9,16 +10,15 @@ import { useEffect } from "react";
 function Search() {
   const {query} = useParams();
   const {getProducts, product, getFilteredProducts, filterProduct } = useSupabase();
-  let q = query as string;
-  useEffect(() => {
-    getFilteredProducts(q);
-  },[]);
   
-  console.log(filterProduct)
+  useEffect(() => {
+    getFilteredProducts(query.toString());
+  },[]);
+
   
   return ( 
     <div>
-      {query}
+      <SearchResult />
     </div>
    );
 }
