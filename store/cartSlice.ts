@@ -1,18 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {RootState} from './index'
-interface CartState{
-  cart:any
+import { REHYDRATE } from 'redux-persist';
+import { RootState } from './index';
+
+interface CartItem {
+  id: number;
+  quantity: number;
 }
-const initialState:CartState = {
-  cart:[]
-}
+
+interface CartState {
+  cart: CartItem[];
+} 
+
+const initialState: CartState = {
+  cart: []
+};
+
 const cartSlice = createSlice({
-  name:'cart',
+  name: 'cart',
   initialState,
-  reducers:{
-    addToCart:(state, action)=>{
+  reducers: {
+    addToCart: (state, action) => {
       const { id } = action.payload;
-      const existingProductIndex = state.cart.findIndex((item: { id: number }) => item.id === id);
+      const existingProductIndex = state.cart.findIndex(item => item.id === id);
 
       if (existingProductIndex !== -1) {
         // Product already exists in cart, increase quantity
@@ -22,13 +31,27 @@ const cartSlice = createSlice({
         state.cart.push({ id, quantity: 1 });
       }
     },
-    removeFromCart:(state, action) => {
+    removeFromCart: (state, action) => {
       const { id } = action.payload;
-      state.cart = state.cart.filter((item: { id: number }) => item.id !== id);
+      state.cart = state.cart.filter(item => item.id !== id);
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action) => {
+      if (isRehydrateAction(action) && action.payload?.cart?.cart) {
+        // Rehydrate cart state from persisted state
+        state.cart = action.payload.cart.cart;
+      }
+    });
+    
   }
-})
+});
 
-export const {addToCart, removeFromCart} = cartSlice.actions;
-export const getCart = (state: RootState) => state.cart.cart
+export const { addToCart, removeFromCart } = cartSlice.actions;
+export const getCart = (state: RootState) => state.cart.cart;
 export default cartSlice.reducer;
+
+// Type guard function to check if the action is of type REHYDRATE
+function isRehydrateAction(action: any): action is { type: string; payload: any } {
+  return action.type === REHYDRATE;
+}

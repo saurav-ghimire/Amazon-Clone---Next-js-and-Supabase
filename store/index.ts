@@ -1,16 +1,30 @@
-import { configureStore } from '@reduxjs/toolkit'
-import cartSlice from './cartSlice'
-// ...
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // Or your preferred storage engine
+import cartReducer from './cartSlice'; // Import your cart reducer
 
+// Combine reducers
+const rootReducer = combineReducers({
+  cart: cartReducer,
+  // Add other reducers here if needed
+});
+
+// Define RootState type
+export type RootState = ReturnType<typeof rootReducer>;
+
+// Persist reducer
+const persistedReducer = persistReducer(
+  {
+    key: 'root',
+    storage,
+  },
+  rootReducer
+);
+
+// Create store
 export const store = configureStore({
-  reducer: {
-    cart:cartSlice    
-  }
-})
+  reducer: persistedReducer,
+});
 
-// Get the type of our store variable
-export type AppStore = typeof store
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore['getState']>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = AppStore['dispatch']
+// Create persisted store
+export const persistor = persistStore(store);
