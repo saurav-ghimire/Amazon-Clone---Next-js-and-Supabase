@@ -19,7 +19,7 @@ function AddToCart({details}:{details:any}) {
             
             <div className="flex flex-col gap-2 mt-3">
               <button onClick={() => {
-                dispatch(addToCart({id:details.id, quantity:1}));
+                dispatch(addToCart({id:details.id}));
               }} className="block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Add to Cart</button>
               <button className="block bg-[#ffa41c] hover:bg-[#ffa41ce4] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Buy Now</button>
             </div>
