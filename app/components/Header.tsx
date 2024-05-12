@@ -3,17 +3,19 @@ import { useAppSelector } from "@/lib/hooks/redux";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
-import {RootState} from '@/store/index'
 import { getCart } from "@/store/cartSlice";
+import { supabase } from "@/lib/supabase/database";
+
 
 const secondMenu = [ 'All', 'Todays Deals', 'Customer Service', 'Registry', 'Gift Cards', 'Sell']
 function Header() {
 
   const[query, setQuery] = useState<string>("");
+  const[user, setUser] = useState<any>(null);
   const router = useRouter();
 
   const handleOnChange= (e : any) => {
@@ -24,6 +26,15 @@ function Header() {
     router.push(`/search/${query}`);
     
   }
+  useEffect(() => {
+    const getUserData = async() => {
+      const {data:user} = await supabase.auth.getUser();
+      setUser(user);
+    }
+    getUserData();
+  },[])
+
+  console.log('user',user)
 
   const cartItems = useAppSelector(getCart);
 
@@ -42,7 +53,11 @@ function Header() {
         </div>
         <div className="flex items-center justify-around w-[20%]">
             <div className="cursor-pointer">
-              <h2 className="text-xs">Hello, Saurav</h2>
+              <h2 className="text-xs hover:underline">
+              {
+                user && user.user?.identities[0]?.identity_data?.full_name ? user.user.identities[0].identity_data.full_name : <Link href={'/signin'}>SignIn</Link>
+              }               
+              </h2>
               <h2 className="font-bold text-sm">Account & List</h2>
             </div>
             <div>
@@ -76,7 +91,17 @@ function Header() {
         }
       </div>
       <div>
-        <Link className="text-[#FEBD69] font-bold"  href={'/'}>Signout</Link>
+        {
+          user && user.user ? <Link
+          onClick={async () => {
+            const {error} = await supabase.auth.signOut();
+            if(!error){
+              setUser(null);
+            }
+          } }
+           className="text-[#FEBD69] font-bold cursor-pointer" href={"/"} >Signout</Link> : ""
+        }
+        
       </div>
     </div>
     </>
