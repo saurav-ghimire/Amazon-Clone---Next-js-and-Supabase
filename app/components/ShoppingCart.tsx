@@ -5,6 +5,7 @@ import { useSupabase } from "@/lib/hooks/useSupabase";
 import { decrementQuantity, getCart, incrementQuantity, removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 // Define types for cart item and product
 type CartItem = {
@@ -26,6 +27,8 @@ function ShopingCart() {
   const { getProducts, product } = useSupabase();
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
+
+  const router = useRouter();
 
   useEffect(() => {
     getProducts();
@@ -123,7 +126,11 @@ function ShopingCart() {
       </div>
       <div className="w-[23%] bg-gray-100 px-3 py-5 rounded-lg">
         <h3 className="font-bold">Subtotal ({cartProducts.length} items): ${subtotal.toFixed(2)}</h3>
-        <button className="mt-2 block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Proceed to checkout</button>
+        <button 
+        onClick={() => {
+          router.push('/checkout')
+        }}
+        className="mt-2 block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Proceed to checkout</button>
       </div>
     </div>
   );

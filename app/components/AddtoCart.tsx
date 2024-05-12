@@ -1,17 +1,21 @@
+"use client"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import { addToCart } from "@/store/cartSlice";
 import Image from "next/image";
 import Link from "next/link";
-import {RootState} from '@/store/index'
+import { useRouter } from "next/navigation";
+
 import { toast } from 'react-toastify';
 
 function AddToCart({details}:{details:any}) {
+  
+  const router = useRouter();
   const dispatch = useAppDispatch();
+
   const handleAddToCart = () => {
     dispatch(addToCart({ id: details.id }));
     toast.success("Added to cart");
   };
-  
 
   return ( 
     <div className="border border-gray-300 rounded-md h-fit">
@@ -24,7 +28,10 @@ function AddToCart({details}:{details:any}) {
             <div className="flex flex-col gap-2 mt-3">
             <button onClick={handleAddToCart} className="block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Add to Cart</button>
 
-              <button className="block bg-[#ffa41c] hover:bg-[#ffa41ce4] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Buy Now</button>
+            <button onClick={() => {
+              router.push('/checkout')
+
+            }} className="block bg-[#ffa41c] hover:bg-[#ffa41ce4] transition-all ease-in-out p-2 rounded-full w-[100%] text-sm font-bold">Buy Now</button>
             </div>
         </div>
     </div>

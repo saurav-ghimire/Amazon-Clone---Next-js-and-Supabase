@@ -10,6 +10,7 @@ function SignIn() {
         <Auth
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
+            providers={['github']}
           />
       </div>
     </div>
