@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { REHYDRATE } from 'redux-persist';
 import { RootState } from './index';
 
@@ -19,7 +19,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload;
       const existingProductIndex = state.cart.findIndex(item => item.id === id);
 
@@ -31,9 +31,23 @@ const cartSlice = createSlice({
         state.cart.push({ id, quantity: 1 });
       }
     },
-    removeFromCart: (state, action) => {
+    removeFromCart: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload;
       state.cart = state.cart.filter(item => item.id !== id);
+    },
+    incrementQuantity: (state, action: PayloadAction<{ id: number }>) => {
+      const { id } = action.payload;
+      const product = state.cart.find(item => item.id === id);
+      if (product) {
+        product.quantity += 1;
+      }
+    },
+    decrementQuantity: (state, action: PayloadAction<{ id: number }>) => {
+      const { id } = action.payload;
+      const product = state.cart.find(item => item.id === id);
+      if (product && product.quantity > 0) {
+        product.quantity -= 1;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -43,11 +57,10 @@ const cartSlice = createSlice({
         state.cart = action.payload.cart.cart;
       }
     });
-    
   }
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = cartSlice.actions;
 export const getCart = (state: RootState) => state.cart.cart;
 export default cartSlice.reducer;
 

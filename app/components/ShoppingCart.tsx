@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import { useSupabase } from "@/lib/hooks/useSupabase";
-import { getCart, removeFromCart } from "@/store/cartSlice";
+import { decrementQuantity, getCart, incrementQuantity, removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
 
 // Define types for cart item and product
@@ -63,6 +63,14 @@ function ShopingCart() {
     setCartProducts(prevCartProducts => prevCartProducts.filter(product => product.id !== id));
   };
 
+  const handleIncrement = (id: any) => {
+    dispatch(incrementQuantity({ id: id }));
+  };
+  
+  const handleDecrement = (id: any) => {
+    dispatch(decrementQuantity({ id: id }));
+  };
+  
   return (
     <div className="flex gap-10 items-start">
       <div className="w-[77%] mt-4">
@@ -78,11 +86,21 @@ function ShopingCart() {
                 <div className="flex-1">
                   <h2 className="font-semibold text-lg">{cartProduct.title}</h2>
                   <p className="text-gray-600 mt-1">Quantity: 
-                    <input 
-                      type="number" 
-                      value={cartProduct.quantity} 
-                      className="ml-2 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                    />
+                  <div className="flex items-center mt-1">
+          <button
+            onClick={() => handleDecrement(cartProduct.id)}
+            className="px-3 py-1 bg-gray-200 rounded-md"
+          >
+            -
+          </button>
+          <span className="px-3 py-1 bg-gray-100 rounded-md">{cartProduct.quantity}</span>
+          <button
+            onClick={() => handleIncrement(cartProduct.id)}
+            className="px-3 py-1 bg-gray-200 rounded-md"
+          >
+            +
+          </button>
+        </div>
                   </p>
                   <p className="text-yellow-600 text-sm mt-1">In Stock</p>
                 </div>
