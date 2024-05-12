@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import { useSupabase } from "@/lib/hooks/useSupabase";
 import { decrementQuantity, getCart, incrementQuantity, removeFromCart } from "@/store/cartSlice";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 // Define types for cart item and product
 type CartItem = {
@@ -60,6 +61,7 @@ function ShopingCart() {
 
   const handleRemove = (id: any) => {
     dispatch(removeFromCart({ id: id }));
+    toast.success("Removed from cart")
     setCartProducts(prevCartProducts => prevCartProducts.filter(product => product.id !== id));
   };
 
