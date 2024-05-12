@@ -2,9 +2,21 @@ import Image from "next/image";
 import Rating from "./Rating";
 import "./styles.css";
 import Link from "next/link";
+import { useAppDispatch } from "@/lib/hooks/redux";
+import { addToCart } from "@/store/cartSlice";
+import { toast } from "react-toastify";
 
 
 function CategoryWiseProduct({products}:{products:any}) {
+  const dispatch = useAppDispatch();
+  
+
+  const handleAddtoCart = (id:any) => {
+    dispatch(addToCart({ id: id }));
+    toast.success("Added to cart");
+    
+  }
+
   return ( 
     <div className="cursor-pointer productSection">
       <div className="relative bg-gray-100 h-[250px] flex items-center justify-center rounded-md overflow-hidden ">
@@ -18,7 +30,9 @@ function CategoryWiseProduct({products}:{products:any}) {
             alt={products.title}
           />
           </Link>
-          <button className="customAddToCart absolute z-10 block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 px-5 rounded-full w-auto text-sm font-bold">Add to Cart</button>
+          <button
+          onClick={() => handleAddtoCart(products.id)}
+           className="customAddToCart absolute z-10 block bg-[#ffd814] hover:bg-[#ffe714e9] transition-all ease-in-out p-2 px-5 rounded-full w-auto text-sm font-bold">Add to Cart</button>
         </div>
       </div>
       <div className="py-2">
