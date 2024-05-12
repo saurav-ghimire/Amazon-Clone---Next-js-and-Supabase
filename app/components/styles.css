@@ -1,0 +1,7 @@
+.customAddToCart{
+  opacity: 0;
+  z-index: 99;
+}
+.productSection:hover .customAddToCart{
+  opacity: 1;
+}
