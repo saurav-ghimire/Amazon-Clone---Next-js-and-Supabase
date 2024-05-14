@@ -1,11 +1,17 @@
 "use client"
+
 import { useAppSelector } from "@/lib/hooks/redux";
 import { useSupabase } from "@/lib/hooks/useSupabase";
+import { supabase } from "@/lib/supabase/database";
 import { getCart } from "@/store/cartSlice";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FaLock } from "react-icons/fa";  
 import { toast } from "react-toastify";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH!)
 
 type Product = {
   id: any;
@@ -120,6 +126,18 @@ function Checkout() {
       if (!email) toast.error("Email Address cannot be empty");
       return; // Exit function
     }
+
+    const createStripeSession = async () => {
+      const stripe = await stripePromise;
+      const {data:{user}}= await supabase.auth.getUser();
+      const checkoutSession = await axios.post("/api/checkout-sessions",{
+        items:cartProducts,
+        email:user?.email
+      })
+    }
+
+    createStripeSession();
+
   }
 
   return ( 
