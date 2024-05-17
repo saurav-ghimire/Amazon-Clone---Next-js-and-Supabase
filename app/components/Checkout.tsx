@@ -1,9 +1,9 @@
 "use client"
 
-import { useAppSelector } from "@/lib/hooks/redux";
+import {useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import { useSupabase } from "@/lib/hooks/useSupabase";
 import { supabase } from "@/lib/supabase/database";
-import { getCart } from "@/store/cartSlice";
+import { getCart, resetCart } from "@/store/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import Image from "next/image";
@@ -29,6 +29,7 @@ type CartItem = {
 
 function Checkout() {
 
+  const dispatch = useAppDispatch();
   
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
@@ -113,6 +114,7 @@ function Checkout() {
   }, [cartProducts]);
 
   const handleCheckout = () => {
+    
     // Check if any field is empty
     if (!fullName || !address || !city || !state || !zip || !country || !phone || !email || !note) {
       // If any field is empty, toast the message
@@ -133,7 +135,16 @@ function Checkout() {
       const checkoutSession = await axios.post("/api/checkout-sessions",{
         items:cartProducts,
         email:user?.email
+      });
+      dispatch(resetCart());
+      const result = await stripe?.redirectToCheckout({
+        sessionId:checkoutSession.data.id
       })
+      
+      if(result?.error){
+          console.log(result.error.message)
+      }
+      
     }
 
     createStripeSession();
