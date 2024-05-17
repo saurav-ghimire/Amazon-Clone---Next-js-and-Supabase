@@ -21,7 +21,7 @@ function HomePage() {
       <div className="w-[90%] mx-auto">
         <div className="py-10">
           <div>
-                <h2 className="font-bold text-2xl">Men's Clothing</h2>
+                <h2 className="font-bold text-2xl">Men&apos;s Clothing</h2>
             </div>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-20 mt-10">
             {mens.slice(0, 4).map((data:any, index:any) => (
@@ -34,7 +34,7 @@ function HomePage() {
 
         <div className="py-10">
           <div>
-                <h2 className="font-bold text-2xl">Women's Clothing</h2>
+                <h2 className="font-bold text-2xl">Women&apos;s Clothing</h2>
             </div>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-20 mt-10">
                 {womens.slice(0, 4).map((data:any, index:any)=>(
