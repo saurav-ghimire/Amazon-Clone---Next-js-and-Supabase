@@ -38,20 +38,20 @@ function Header() {
 
   return (
     <>
-      <div className="bg-[#131921] text-white py-2">
+      <div className="bg-[#131921] text-white py-2 md:py-3">
         <div className="flex items-center justify-between w-[90%] mx-auto">
-          <div className="w-24 md:w-[15%]">
+          <div className="w-24 md:w-[9%]">
             <Link href={'/'}>
               <Image alt="Logo" src={'/amazon-logo-2.webp'} width={150} height={150} className="w-full h-auto" />
             </Link>
           </div>
-          <div className="hidden md:flex w-[60%] items-center">
+          <div className="hidden md:flex w-[55%] items-center">
             <input onChange={(e) => handleOnChange(e)} className="w-full p-2 rounded-l-md text-black outline-none" type="text" placeholder="Search Amazon" />
             <div className="bg-[#FEBD69] cursor-pointer p-2 rounded-r-md transition-all ease-linear hover:bg-[#eeaf5c]" onClick={() => submitHandler()}>
               <IoSearch size={24} className="text-black" />
             </div>
           </div>
-          <div className="flex items-center justify-around w-[30%] md:w-[20%]">
+          <div className="flex items-center justify-around w-[30%] md:w-[19%]">
             <div className="cursor-pointer">
               <h2 className="text-xs hover:underline">
                 {
