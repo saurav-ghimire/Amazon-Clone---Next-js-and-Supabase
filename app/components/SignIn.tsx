@@ -5,8 +5,8 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 function SignIn() {
   return ( 
-    <div className="absolute top-0 bg-white h-[100%] w-[100%] flex items-center content-center">
-      <div className='w-[25%] m-auto'>
+    <div className="fixed top-0 bg-white h-[100%] w-[100%] flex items-center content-center">
+      <div className='md:w-[25%] m-auto'>
         <Auth
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}

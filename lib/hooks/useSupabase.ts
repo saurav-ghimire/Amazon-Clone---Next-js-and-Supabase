@@ -21,16 +21,30 @@ export const useSupabase =  () => {
         }
       }
 
-      const getFilteredProducts = async (query:string) => {
-        let { data, error } = await supabase.from('Products').select('*').or(`title.ilike.%${query}%, description.ilike.%${query}%, category.ilike.%${query}%` )
-
-          if(data){
-            setFilterProduct(data)
-          }
-            if(error){
-              console.log(error)
-            }
-          }
+      const getFilteredProducts = async (query: string) => {
+        let data, error;
+        
+        if (query === "All") {
+          // Fetch all products if query is "All"
+          ({ data, error } = await supabase.from('Products').select('*'));
+        } else {
+          // Fetch filtered products based on the query
+          ({ data, error } = await supabase
+            .from('Products')
+            .select('*')
+            .or(`title.ilike.%${query}%,description.ilike.%${query}%,category.ilike.%${query}%`)
+          );
+        }
+      
+        if (data) {
+          setFilterProduct(data);
+        }
+      
+        if (error) {
+          console.log(error);
+        }
+      };
+      
 
           const getSingleProduct = async (id:Number) => {
             let { data, error } = await supabase.from('Products').select('*').eq('id',id)

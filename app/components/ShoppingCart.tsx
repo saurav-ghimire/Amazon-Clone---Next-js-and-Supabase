@@ -77,54 +77,53 @@ function ShopingCart() {
   };
   
   return (
-    <div className="flex gap-10 items-start">
-      <div className="w-[77%] mt-4">
+    <div className="block md:flex gap-10 items-start">
+      <div className="md:w-[77%] mt-4">
         {cartItems.length === 0 ? (
           <p>No products in cart</p>
         ) : (
           cartProducts.map((cartProduct: Product) => (
-            <div key={cartProduct.id} className="border-b border-gray-200 pb-6 mb-4">
-              <div className="flex gap-4 items-center">
-                <div className="w-20 h-20 relative overflow-hidden">
-                  <Image src={cartProduct.image} layout="fill" objectFit="contain" alt="cart Items" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="font-semibold text-lg">{cartProduct.title}</h2>
-                  <p className="text-gray-600 mt-1">Quantity: 
-                  <div className="flex items-center mt-1">
-          <button
-            onClick={() => handleDecrement(cartProduct.id)}
-            className="px-3 py-1 bg-gray-200 rounded-md"
-          >
-            -
-          </button>
-          <span className="px-3 py-1 bg-gray-100 rounded-md">{cartProduct.quantity}</span>
-          <button
-            onClick={() => handleIncrement(cartProduct.id)}
-            className="px-3 py-1 bg-gray-200 rounded-md"
-          >
-            +
-          </button>
-        </div>
-                  </p>
-                  <p className="text-yellow-600 text-sm mt-1">In Stock</p>
-                </div>
-                <div className="flex flex-col items-end">
-                  <p className="text-xl font-semibold">${cartProduct.price * cartProduct.quantity}</p>
-                  <button
-                    onClick={() => handleRemove(cartProduct.id)}
-                    className="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-semibold"
-                  >
-                    Remove
-                  </button> 
-                </div>
-              </div>
-            </div>
+            <div key={cartProduct.id} className="border-b border-gray-200 pb-6 mb-4 flex flex-col md:flex-row items-start md:items-center md:gap-4">
+  <div className="w-20 h-20 relative overflow-hidden">
+    <Image src={cartProduct.image} layout="fill" objectFit="contain" alt="cart Items" />
+  </div>
+  <div className="flex-1 mt-4 md:mt-0">
+    <h2 className="font-semibold text-lg">{cartProduct.title}</h2>
+    <p className="text-gray-600 mt-1">Quantity: 
+      <div className="flex items-center mt-1">
+        <button
+          onClick={() => handleDecrement(cartProduct.id)}
+          className="px-3 py-1 bg-gray-200 rounded-md"
+        >
+          -
+        </button>
+        <span className="px-3 py-1 bg-gray-100 rounded-md">{cartProduct.quantity}</span>
+        <button
+          onClick={() => handleIncrement(cartProduct.id)}
+          className="px-3 py-1 bg-gray-200 rounded-md"
+        >
+          +
+        </button>
+      </div>
+    </p>
+    <p className="text-yellow-600 text-sm mt-1">In Stock</p>
+  </div>
+  <div className="flex flex-col items-end">
+    <p className="text-xl font-semibold">${cartProduct.price * cartProduct.quantity}</p>
+    <button
+      onClick={() => handleRemove(cartProduct.id)}
+      className="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-semibold"
+    >
+      Remove
+    </button> 
+  </div>
+</div>
+
           ))
         )}
         
       </div>
-      <div className="w-[23%] bg-gray-100 px-3 py-5 rounded-lg">
+      <div className="md:w-[23%] bg-gray-100 px-3 py-5 rounded-lg">
         <h3 className="font-bold">Subtotal ({cartProducts.length} items): ${subtotal.toFixed(2)}</h3>
         <button 
         onClick={() => {

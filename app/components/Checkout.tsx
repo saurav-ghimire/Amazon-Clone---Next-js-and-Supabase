@@ -152,10 +152,10 @@ function Checkout() {
   }
 
   return ( 
-    <div className="w-[80%] m-auto">
+    <div className="md:w-[80%] m-auto py-10 px-5 md:px-0">
       <div>
-        <div className="py-10 flex justify-between items-center">
-          <div className="mb-5">
+        <div className="mb-10 flex justify-between items-center">
+          <div>
             <Image src={'/amazon-logo.png'} height={100} width={100} alt="Amazon" />
           </div>
           <div>
@@ -166,8 +166,8 @@ function Checkout() {
           </div>
         </div>
       </div>
-      <div className="flex items-start justify-between">
-        <div className="w-[70%]">
+      <div className="md:flex items-start justify-between">
+        <div className="md:w-[70%]">
           <h2 className="font-bold text-lg mb-3">Delivery Address</h2>
           <hr />
           <div className="space-y-4 mt-4">
@@ -255,7 +255,7 @@ function Checkout() {
         )}
           </div>
         </div>
-        <div className="w-[25%]">
+        <div className="md:w-[25%]">
         <h2 className="font-bold text-lg mb-3">Summary</h2>
           <hr className="mb-4" />
           <div className=" bg-gray-100 px-3 py-5 rounded-lg">

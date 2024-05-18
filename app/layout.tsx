@@ -4,9 +4,9 @@ import "./globals.css";
 import Header from "./components/Header";
 import ReduxProvider from "./components/ReduxProvider";
 const inter = Inter({ subsets: ["latin"] });
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Amazon Clone",
@@ -21,12 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+          <div className="overflow-hidden">
           <ReduxProvider>
-            <Header />
-            {children}
+              <Header />
+              {children}
+              <Footer />
           </ReduxProvider>
           <ToastContainer />
-
+          </div>
         </body>
     </html>
   );
